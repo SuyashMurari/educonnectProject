@@ -1,0 +1,32 @@
+<h2>Create Student</h2>
+<form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+    <label>Full Name:</label>
+    <input formControlName="fullName" />
+    <div *ngIf="studentForm.get('fullName')?.invalid && studentForm.get('fullName')?.touched">
+        <small>Name is required (min 2 characters).</small>
+    </div>
+    <label>Date of Birth:</label>
+    <input type="date" formControlName="dob" />
+    <div *ngIf="studentForm.get('dob')?.invalid && studentForm.get('dob')?.touched">
+        <small> Date of Birth is required.</small>
+    </div>
+    <label>Contact Number:</label>
+    <input formControlName="contact" />
+    <div *ngIf="studentForm.get('contact')?.invalid && studentForm.get('contact')?.touched">
+        <small> Enter a valid 10-digit number.</small>
+    </div>
+    <label>Email:</label>
+    <input formControlName="email" />
+    <div *ngIf="studentForm.get('email')?.invalid && studentForm.get('email')?.touched">
+        <small>Enter a valid email.</small>
+    </div>
+    <label>Address:</label>
+    <textarea formControlName="address"></textarea>
+    <div *ngIf="studentForm.get('address')?.invalid && studentForm.get('address')?.touched">
+        <small>Address must be at least 5 characters.</small>
+    </div>
+    <button type="submit" [disabled]="studentForm.invalid">Create</button>
+</form>
+<p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+<p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+<a routerLink="/dashboard">Return to Dashboard</a>

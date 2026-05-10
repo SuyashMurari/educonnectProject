@@ -1,0 +1,103 @@
+<div class="container mt-4">
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">Update Student</h4>
+    </div>
+
+    <div class="card-body">
+      <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+
+        <!-- Full Name -->
+        <div class="mb-3">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-control" formControlName="fullName" />
+          <div class="text-danger mt-1"
+               *ngIf="studentForm.get('fullName')?.invalid && studentForm.get('fullName')?.touched">
+            Full Name is required (min 2 characters).
+          </div>
+        </div>
+
+        <!-- Username -->
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input type="text" class="form-control" formControlName="username" />
+          <div class="text-danger mt-1"
+               *ngIf="studentForm.get('username')?.invalid && studentForm.get('username')?.touched">
+            <small *ngIf="studentForm.get('username')?.hasError('required')">Username is required.</small>
+            <small *ngIf="studentForm.get('username')?.hasError('pattern')">No special characters allowed.</small>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-control" formControlName="password" />
+          <div class="text-danger mt-1"
+               *ngIf="studentForm.get('password')?.invalid && studentForm.get('password')?.touched">
+            <small *ngIf="studentForm.get('password')?.hasError('required')">Password is required.</small>
+            <small *ngIf="studentForm.get('password')?.hasError('minlength')">Min 8 characters.</small>
+            <small *ngIf="studentForm.get('password')?.hasError('pattern')">
+              Must include 1 uppercase letter & 1 digit.
+            </small>
+          </div>
+        </div>
+
+        <!-- Date of Birth -->
+        <div class="mb-3">
+          <label class="form-label">Date of Birth</label>
+          <input type="date" class="form-control" formControlName="dateOfBirth" />
+          <div class="text-danger mt-1"
+               *ngIf="studentForm.get('dateOfBirth')?.invalid && studentForm.get('dateOfBirth')?.touched">
+            Date of Birth is required.
+          </div>
+        </div>
+
+        <!-- Contact Number -->
+        <div class="mb-3">
+          <label class="form-label">Contact Number</label>
+          <input type="text" class="form-control" formControlName="contactNumber" />
+          <div class="text-danger mt-1"
+               *ngIf="studentForm.get('contactNumber')?.invalid && studentForm.get('contactNumber')?.touched">
+            Must be a valid 10‑digit number.
+          </div>
+        </div>
+
+        <!-- Email (readonly) -->
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" formControlName="email" readonly />
+        </div>
+
+        <!-- Address -->
+        <div class="mb-3">
+          <label class="form-label">Address</label>
+          <textarea rows="3" class="form-control" formControlName="address"></textarea>
+          <div class="text-danger mt-1"
+               *ngIf="studentForm.get('address')?.invalid && studentForm.get('address')?.touched">
+            Address must contain at least 5 characters.
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-success w-100" [disabled]="studentForm.invalid">
+          Update Student
+        </button>
+
+        <!-- Dashboard Link -->
+        <div class="text-center mt-3">
+          <a routerLink="/educonnect" class="text-decoration-none">Back to Dashboard</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Success Alert -->
+  <div *ngIf="successMessage" class="alert alert-success mt-3">
+    {{ successMessage }}
+  </div>
+
+  <!-- Error Alert -->
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+    {{ errorMessage }}
+  </div>
+</div>

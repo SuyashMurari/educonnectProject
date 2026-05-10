@@ -1,0 +1,222 @@
+<app-navbar></app-navbar>
+
+<div *ngIf="role === 'TEACHER'" class="container mt-4">
+
+  <h2 class="text-center mb-4 fw-bold">Teacher Dashboard</h2>
+
+  <!-- Teacher Details -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">Teacher Details</h5>
+    </div>
+    <div class="card-body">
+      <p><strong>Name:</strong> {{ teacherDetails?.fullName }}</p>
+      <p><strong>Email:</strong> {{ teacherDetails?.email }}</p>
+      <p><strong>Subject:</strong> {{ teacherDetails?.subject }}</p>
+      <p><strong>Years of Experience:</strong> {{ teacherDetails?.yearsOfExperience }}</p>
+
+      <button (click)="navigateToEditTeacher()" class="btn btn-sm btn-primary me-2">Edit</button>
+      <button (click)="deleteTeacher()" class="btn btn-sm btn-danger">Delete</button>
+    </div>
+  </div>
+
+  <!-- Courses Section -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-success text-white">
+      <h5 class="mb-0">Courses</h5>
+    </div>
+    <div class="card-body">
+
+      <div *ngIf="courses.length === 0" class="alert alert-warning text-center">
+        No courses available.
+      </div>
+
+      <table *ngIf="courses.length > 0" class="table table-bordered table-hover">
+        <thead class="table-success">
+          <tr>
+            <th>Course Id</th>
+            <th>Course Name</th>
+            <th>Description</th>
+            <th width="150">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let course of courses"
+              (click)="onCourseSelect(course)"
+              [class.table-info]="course.courseId === selectedCourseId">
+
+            <td>{{ course.courseId }}</td>
+            <td>{{ course.courseName }}</td>
+            <td>{{ course.description }}</td>
+            <td>
+              <button (click)="navigateToEditCourse(course.courseId)"
+                      class="btn btn-sm btn-primary me-2">
+                Edit
+              </button>
+              <button (click)="deleteCourse(course.courseId)"
+                      class="btn btn-sm btn-danger">
+                Delete
+              </button>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div> 
+
+  <!-- Enrollment Section -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-info text-white">
+      <h5 class="mb-0">Enrollment in Selected Course - {{ selectedCourseId }}</h5>
+    </div>
+    <div class="card-body">
+
+      <div *ngIf="selectedCourseEnrollment.length === 0" class="alert alert-warning text-center">
+        No enrollments available.
+      </div>
+
+      <table *ngIf="selectedCourseEnrollment.length > 0" class="table table-bordered">
+        <thead class="table-info">
+          <tr>
+            <th>Course Name</th>
+            <th>Student Name</th>
+            <th>Enrollment Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let enrollment of selectedCourseEnrollment">
+            <td>{{ enrollment.course.courseName }}</td>
+            <td>{{ enrollment.student.fullName }}</td>
+            <td>{{ enrollment.enrollmentDate | date }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <!-- Students Section -->
+  <div class="card mb-5 shadow-sm">
+    <div class="card-header bg-secondary text-white">
+      <h5 class="mb-0">Students</h5>
+    </div>
+    <div class="card-body">
+
+      <div *ngIf="students.length === 0" class="alert alert-warning text-center">
+        No students available.
+      </div>
+
+      <table *ngIf="students.length > 0" class="table table-bordered">
+        <thead class="table-secondary">
+          <tr>
+            <th>Student Id</th>
+            <th>Student Name</th>
+            <th>Date of Birth</th>
+            <th>Contact Number</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of students">
+            <td>{{ student.studentId }}</td>
+            <td>{{ student.fullName }}</td>
+            <td>{{ student.dateOfBirth | date }}</td>
+            <td>{{ student.contactNumber }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+</div>
+
+
+<!-- STUDENT DASHBOARD SECTION -->
+<div *ngIf="role === 'STUDENT'" class="container mt-4">
+
+  <h2 class="text-center mb-4 fw-bold">Student Dashboard</h2>
+
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">Student Details</h5>
+    </div>
+    <div class="card-body">
+      <p><strong>Name:</strong> {{ studentDetails?.fullName }}</p>
+      <p><strong>Email:</strong> {{ studentDetails?.email }}</p>
+      <p><strong>Date Of Birth:</strong> {{ studentDetails?.dateOfBirth | date }}</p>
+      <p><strong>Contact Number:</strong> {{ studentDetails?.contactNumber }}</p>
+
+      <button (click)="navigateToEditStudent()" class="btn btn-sm btn-primary me-2">Edit</button>
+      <button (click)="deleteStudent()" class="btn btn-sm btn-danger">Delete</button>
+    </div>
+  </div>
+
+  <!-- Enrolled Courses -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-success text-white">
+      <h5 class="mb-0">Enrolled Courses Details</h5>
+    </div>
+    <div class="card-body">
+
+      <div *ngIf="enrollments.length === 0" class="alert alert-warning text-center">
+        No enrollments available.
+      </div>
+
+      <table *ngIf="enrollments.length > 0" class="table table-bordered">
+        <thead class="table-success">
+          <tr>
+            <th>Course Name</th>
+            <th>Teacher Name</th>
+            <th>Student Name</th>
+            <th>Enrollment Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let enrollment of enrollments">
+            <td>{{ enrollment.course.courseName }}</td>
+            <td>{{ enrollment.course.teacher.fullName }}</td>
+            <td>{{ enrollment.student.fullName }}</td>
+            <td>{{ enrollment.enrollmentDate | date }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <!-- All Courses -->
+  <div class="card mb-5 shadow-sm">
+    <div class="card-header bg-secondary text-white">
+      <h5 class="mb-0">All Available Courses</h5>
+    </div>
+    <div class="card-body">
+
+      <div *ngIf="courses.length === 0" class="alert alert-warning text-center">
+        No courses available.
+      </div>
+
+      <table *ngIf="courses.length > 0" class="table table-bordered">
+        <thead class="table-secondary">
+          <tr>
+            <th>Course Id</th>
+            <th>Course Name</th>
+            <th>Description</th>
+            <th>Teacher Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let course of courses">
+            <td>{{ course.courseId }}</td>
+            <td>{{ course.courseName }}</td>
+            <td>{{ course.description }}</td>
+            <td>{{ course.teacher.fullName }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+</div>
