@@ -20,6 +20,7 @@ export class EnrollmentComponent implements OnInit {
     students: Student[] = [];
     role!: string | null;
     studentId!: number;
+    teacherId!: number;
     student!: Student;
 
     constructor(private formBuilder: FormBuilder, private educonnectService: EduConnectService) { }
@@ -27,6 +28,7 @@ export class EnrollmentComponent implements OnInit {
     ngOnInit(): void {
         this.role = localStorage.getItem("role");
         this.studentId = Number(localStorage.getItem("student_id"));
+        this.teacherId = Number(localStorage.getItem("teacher_id"));
 
         this.initializeForm();
 
@@ -50,30 +52,42 @@ export class EnrollmentComponent implements OnInit {
 
     loadTeacherData(): void {
         this.educonnectService.getAllStudents().subscribe({
-            next: (response) => {
+            next: (response: Student[]) => {
                 this.students = response;
             },
-            error: (error) => console.log('Error loading students.', error)
+            error: (error: HttpErrorResponse) => console.log('Error loading students.', error)
         });
     }
 
     loadStudentData(): void {
         this.educonnectService.getStudentById(this.studentId).subscribe({
-            next: (response) => {
+            next: (response: Student) => {
                 this.student = response;
                 console.log(response);
                 this.enrollmentForm.patchValue({ student: this.student.fullName });
             },
-            error: (error) => console.log('Error loading student details.', error)
+            error: (error: HttpErrorResponse) => console.log('Error loading student details.', error)
         });
     }
 
     loadCourses(): void {
-        this.educonnectService.getAllCourses().subscribe({
-            next: (response) => {
-                this.courses = response;
+        const courseRequest = this.role === 'TEACHER' && this.teacherId > 0
+            ? this.educonnectService.getCoursesByTeacherId(this.teacherId)
+            : this.educonnectService.getAllCourses();
+
+        courseRequest.subscribe({
+            next: (response: any) => {
+                const parsedCourses = Array.isArray(response)
+                    ? response
+                    : (response?.courses ?? response?.content ?? response?.data ?? []);
+
+                this.courses = Array.isArray(parsedCourses) ? parsedCourses : [];
             },
-            error: (error) => console.log('Error loading courses.', error)
+            error: (error: HttpErrorResponse) => {
+                console.log('Error loading courses.', error);
+                this.courses = [];
+                this.errorMessage = 'Unable to load courses. Please refresh and try again.';
+            }
         });
     }
 
@@ -93,7 +107,7 @@ export class EnrollmentComponent implements OnInit {
                         this.enrollmentForm.get('student')?.disable();
                     }
                 },
-                error: (error) => this.handleError(error)
+                error: (error: HttpErrorResponse) => this.handleError(error)
             });
         }
     }

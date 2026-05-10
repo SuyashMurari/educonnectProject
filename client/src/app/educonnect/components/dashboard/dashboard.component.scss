@@ -1,17 +1,304 @@
-.dashboard {
-  padding: 1rem
-  h3 {
-    margin-top: 2rem;
-    color: #1976d2;
+/* =========================
+   DASHBOARD BACKGROUND
+========================= */
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(37,99,235,0.10), transparent 25%),
+    radial-gradient(circle at bottom right, rgba(59,130,246,0.10), transparent 25%),
+    linear-gradient(135deg, #eef2ff, #f8fafc);
+  font-family: 'Inter', sans-serif;
+  color: #0f172a;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container {
+  max-width: 1400px;
+  padding-top: 30px;
+  padding-bottom: 40px;
+}
+
+/* =========================
+   PAGE TITLE
+========================= */
+
+h2 {
+  font-size: 42px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 35px !important;
+  position: relative;
+}
+
+h2::after {
+  content: '';
+  width: 90px;
+  height: 5px;
+  border-radius: 20px;
+  background: linear-gradient(to right, #2563eb, #60a5fa);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -12px;
+}
+
+/* =========================
+   CARD DESIGN
+========================= */
+
+.card {
+  border: none !important;
+  border-radius: 28px !important;
+  overflow: hidden;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 20px 40px rgba(15,23,42,0.08),
+    0 8px 20px rgba(15,23,42,0.05) !important;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+/* =========================
+   CARD HEADER
+========================= */
+
+.card-header {
+  border: none !important;
+  padding: 22px 28px !important;
+}
+
+.card-header h5 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* Header Colors */
+
+.bg-primary {
+  background:
+    linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+}
+
+.bg-success {
+  background:
+    linear-gradient(135deg, #16a34a, #15803d) !important;
+}
+
+.bg-info {
+  background:
+    linear-gradient(135deg, #0891b2, #0e7490) !important;
+}
+
+.bg-secondary {
+  background:
+    linear-gradient(135deg, #64748b, #475569) !important;
+}
+
+/* =========================
+   CARD BODY
+========================= */
+
+.card-body {
+  padding: 30px !important;
+}
+
+/* =========================
+   TEXT DETAILS
+========================= */
+
+.card-body p {
+  font-size: 17px;
+  margin-bottom: 14px;
+  color: #334155;
+}
+
+.card-body strong {
+  color: #0f172a;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn {
+  border: none !important;
+  border-radius: 14px !important;
+  padding: 10px 22px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.4px;
+  transition: all 0.3s ease;
+}
+
+/* Primary */
+
+.btn-primary {
+  background:
+    linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  box-shadow:
+    0 8px 20px rgba(37,99,235,0.25);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 26px rgba(37,99,235,0.35);
+}
+
+/* Danger */
+
+.btn-danger {
+  background:
+    linear-gradient(135deg, #ef4444, #dc2626) !important;
+  box-shadow:
+    0 8px 20px rgba(239,68,68,0.25);
+}
+
+.btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 26px rgba(239,68,68,0.35);
+}
+
+/* =========================
+   TABLES
+========================= */
+
+.table {
+  margin-top: 10px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: white;
+}
+
+.table thead th {
+  border: none !important;
+  padding: 18px !important;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #0f172a;
+}
+
+.table td {
+  padding: 18px !important;
+  vertical-align: middle;
+  border-color: #e2e8f0 !important;
+  font-size: 15px;
+  color: #334155;
+}
+
+/* Table Header Themes */
+
+.table-success th {
+  background: #dcfce7 !important;
+}
+
+.table-info th {
+  background: #cffafe !important;
+}
+
+.table-secondary th {
+  background: #e2e8f0 !important;
+}
+
+/* Hover */
+
+.table-hover tbody tr {
+  transition: all 0.3s ease;
+}
+
+.table-hover tbody tr:hover {
+  background: #eff6ff !important;
+  transform: scale(1.002);
+}
+
+/* Selected Row */
+
+.table-info {
+  transition: all 0.3s ease;
+}
+
+tr.table-info {
+  background: rgba(37,99,235,0.08) !important;
+  border-left: 5px solid #2563eb;
+}
+
+/* =========================
+   ALERTS
+========================= */
+
+.alert {
+  border: none !important;
+  border-radius: 16px !important;
+  padding: 16px 20px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.alert-warning {
+  background: #fef3c7 !important;
+  color: #92400e !important;
+}
+
+/* =========================
+   SPACING
+========================= */
+
+.mb-4 {
+  margin-bottom: 32px !important;
+}
+
+.mb-5 {
+  margin-bottom: 42px !important;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+  .container {
+    padding: 20px 10px;
   }
 
-  button {
-    margin-right: 1rem;
-    margin-top: .5rem;
+  h2 {
+    font-size: 30px;
   }
-  ul {
-    list-style: none;
-    padding: 0;
-    li { margin: .5rem 0; }
+
+  .card-body {
+    padding: 20px !important;
+  }
+
+  .card-header h5 {
+    font-size: 20px;
+  }
+
+  .btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .table td,
+  .table th {
+    padding: 14px !important;
+    font-size: 14px;
   }
 }

@@ -3,12 +3,15 @@ package com.edutech.progressive.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "course")
@@ -28,9 +31,10 @@ public class Course {
     @Column(name = "teacher_id" , insertable = false, updatable = false)
     private Integer teacherId;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "teacher_id")
-    Teacher teacher;
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "teacher_id", nullable = true)
+    private Teacher teacher;
 
     public Course() {
     }
